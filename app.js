@@ -27,6 +27,8 @@ const connectDB = require("./db/connect");
 
 //Routers
 const adminRouter = require("./routers/adminRouter");
+const buyerRouter = require("./routers/buyerRouter");
+const vendorRouter = require("./routers/vendorRouter");
 
 //Middleware
 const notfoundMiddleware = require("./middleware/not-found");
@@ -51,6 +53,8 @@ app.use(fileUpload({ useTempFiles: true }));
 
 //Mount Routers
 app.use("/api/v1/multi-vendor-store", adminRouter);
+app.use("/api/v1/multi-vendor-store", buyerRouter);
+app.use("/api/v1/multi-vendor-store", vendorRouter);
 
 app.use(notfoundMiddleware);
 app.use(errorHandlerMiddleware);

@@ -33,6 +33,9 @@ const buyerSchema = new mongoose.Schema(
       required: [true, "Please enter your password"],
       minlength: 7,
     },
+    reset_code: {
+      type: Number,
+    },
     role: {
       type: String,
       default: "buyer",
@@ -43,18 +46,18 @@ const buyerSchema = new mongoose.Schema(
 
 //Hash User Password
 buyerSchema.pre("save", async function () {
-    const buyer = this;
-  
-    if (!buyer.isModified("password")) return;
-    const salt = await bcrypt.genSalt(10);
-    buyer.password = await bcrypt.hash(buyer.password, salt);
-  });
-  
-  //check if password is correct.
-  buyerSchema.methods.comparePassword = async function (buyerPassword) {
-    const buyer = this;
-    const isMatch = await bcrypt.compare(buyerPassword, buyer.password);
-    return isMatch;
-  };
-  
-  module.exports = mongoose.model("Buyer", buyerSchema);
+  const buyer = this;
+
+  if (!buyer.isModified("password")) return;
+  const salt = await bcrypt.genSalt(10);
+  buyer.password = await bcrypt.hash(buyer.password, salt);
+});
+
+//check if password is correct.
+buyerSchema.methods.comparePassword = async function (buyerPassword) {
+  const buyer = this;
+  const isMatch = await bcrypt.compare(buyerPassword, buyer.password);
+  return isMatch;
+};
+
+module.exports = mongoose.model("Buyer", buyerSchema);

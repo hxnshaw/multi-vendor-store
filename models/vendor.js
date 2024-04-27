@@ -33,6 +33,9 @@ const vendorSchema = new mongoose.Schema(
       required: [true, "Please enter your password"],
       minlength: 7,
     },
+    reset_code: {
+      type: Number,
+    },
     role: {
       type: String,
       default: "vendor",
@@ -43,18 +46,18 @@ const vendorSchema = new mongoose.Schema(
 
 //Hash User Password
 vendorSchema.pre("save", async function () {
-    const vendor = this;
-  
-    if (!vendor.isModified("password")) return;
-    const salt = await bcrypt.genSalt(10);
-    vendor.password = await bcrypt.hash(vendor.password, salt);
-  });
-  
-  //check if password is correct.
-  vendorSchema.methods.comparePassword = async function (vendorPassword) {
-    const vendor = this;
-    const isMatch = await bcrypt.compare(vendorPassword, vendor.password);
-    return isMatch;
-  };
-  
-  module.exports = mongoose.model("Vendor", vendorSchema);
+  const vendor = this;
+
+  if (!vendor.isModified("password")) return;
+  const salt = await bcrypt.genSalt(10);
+  vendor.password = await bcrypt.hash(vendor.password, salt);
+});
+
+//check if password is correct.
+vendorSchema.methods.comparePassword = async function (vendorPassword) {
+  const vendor = this;
+  const isMatch = await bcrypt.compare(vendorPassword, vendor.password);
+  return isMatch;
+};
+
+module.exports = mongoose.model("Vendor", vendorSchema);
