@@ -33,10 +33,10 @@ exports.registerBuyer = async (req, res) => {
 
   await transport.sendMail({
     to: tokenUser.email,
-    from: "hello@multi-vendor-store.com",
-    text: "Welcome to The Multi-Vendor-Store, we hope you enjoy your experience with us!",
-    html: "<h1>Welcome to The Multi-Vendor-Store</h1> <br>We hope you enjoy your experience with us!</br>",
-    subject: "Welcome to The Multi-Vendor-Store",
+    from: "hello@multi-buyer-store.com",
+    text: "Welcome to The Multi-buyer-Store, we hope you enjoy your experience with us!",
+    html: "<h1>Welcome to The Multi-buyer-Store</h1> <br>We hope you enjoy your experience with us!</br>",
+    subject: "Welcome to The Multi-buyer-Store",
   });
 };
 
@@ -106,7 +106,7 @@ exports.buyerForgotPassword = async (req, res) => {
 
   const resetCode = Math.floor(10000 + Math.random() * 90000);
 
-  await buyer.update({ reset_code: resetCode });
+  await buyer.updateOne({ reset_code: resetCode });
   await buyer.save();
 
   var transport = nodemailer.createTransport({
@@ -120,15 +120,29 @@ exports.buyerForgotPassword = async (req, res) => {
 
   await transport.sendMail({
     to: email,
-    from: "hello@multi-vendor-store.com",
+    from: "hello@multi-buyer-store.com",
     text: "Your passsword reset code is " + resetCode,
     html: "Your passsword reset code is " + resetCode,
-    subject: "RESET YOUR PASSWORD - The Multi-Vendor-Store.",
+    subject: "RESET YOUR PASSWORD - The Multi-buyer-Store.",
   });
 
   res.status(200).json({
     status: "Please check your email for the reset code",
   });
+};
+
+exports.buyerResetPassword = async (req, res) => {
+  const { reset_code, email, new_password } = req.body;
+  if (!reset_code || !email || !new_password)
+    throw new CustomError.BadRequestError("Incomplete Credentials");
+
+  const buyer = await Buyer.findOne({ email, reset_code });
+  if (!buyer) throw new CustomError.NotFoundError("Reset code does not match");
+  buyer.password = new_password;
+  buyer.reset_code = "";
+  await buyer.save();
+
+  res.status(StatusCodes.OK).json({ message: "New Password Saved." });
 };
 
 exports.updateBuyerDetails = async (req, res) => {
@@ -161,10 +175,6 @@ exports.deleteBuyerProfileByAdmin = async (req, res) => {
   const { id: buyerId } = req.params;
   const buyer = await Buyer.findOne({ _id: buyerId });
   if (!buyer) throw new CustomError.NotFoundError("Not found");
-  res.cookie("token", "deleteUser", {
-    httpOnly: true,
-    expiresIn: new Date(Date.now()),
-  });
   await buyer.delete();
   res.status(StatusCodes.OK).json({ message: "Account Deleted" });
 };

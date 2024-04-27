@@ -9,6 +9,7 @@ const {
   viewMyBuyerProfile,
   updateBuyerPassword,
   buyerForgotPassword,
+  buyerResetPassword,
   updateBuyerDetails,
   deleteBuyerProfile,
   deleteBuyerProfileByAdmin,
@@ -30,6 +31,9 @@ router.post("/buyers/logout", logoutBuyer);
 
 //buyer forgot password
 router.post("/buyers/forgot-password", buyerForgotPassword);
+
+//buyer reset password
+router.post("/buyers/reset-password", buyerResetPassword);
 
 //Admin route to view all registered buyers
 router
