@@ -32,4 +32,4 @@ const businessSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-module.exports = new mongoose.Model("Business", businessSchema);
+module.exports = mongoose.model("Business", businessSchema);
