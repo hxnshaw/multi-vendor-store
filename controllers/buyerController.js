@@ -167,7 +167,7 @@ exports.deleteBuyerProfile = async (req, res) => {
     httpOnly: true,
     expiresIn: new Date(Date.now()),
   });
-  await buyer.delete();
+  await buyer.deleteOne();
   res.status(StatusCodes.OK).json({ message: "Account Deleted" });
 };
 
@@ -175,6 +175,6 @@ exports.deleteBuyerProfileByAdmin = async (req, res) => {
   const { id: buyerId } = req.params;
   const buyer = await Buyer.findOne({ _id: buyerId });
   if (!buyer) throw new CustomError.NotFoundError("Not found");
-  await buyer.delete();
+  await buyer.deleteOne();
   res.status(StatusCodes.OK).json({ message: "Account Deleted" });
 };
