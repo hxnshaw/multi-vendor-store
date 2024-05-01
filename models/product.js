@@ -48,7 +48,7 @@ const productSchema = new mongoose.Schema(
         "Video Games",
       ],
     },
-    bsuiness_name: {
+    shop: {
       type: mongoose.Types.ObjectId,
       ref: "Business",
       required: true,
@@ -62,4 +62,4 @@ const productSchema = new mongoose.Schema(
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
-module.exports = new mongoose.Model("Product", productSchema);
+module.exports = mongoose.model("Product", productSchema);

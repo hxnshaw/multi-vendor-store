@@ -30,6 +30,7 @@ const adminRouter = require("./routers/adminRouter");
 const buyerRouter = require("./routers/buyerRouter");
 const vendorRouter = require("./routers/vendorRouter");
 const businessRouter = require("./routers/businessRouter");
+const productRouter = require("./routers/productRouter");
 
 //Middleware
 const notfoundMiddleware = require("./middleware/not-found");
@@ -57,6 +58,7 @@ app.use("/api/v1/multi-vendor-store", adminRouter);
 app.use("/api/v1/multi-vendor-store", buyerRouter);
 app.use("/api/v1/multi-vendor-store", vendorRouter);
 app.use("/api/v1/multi-vendor-store", businessRouter);
+app.use("/api/v1/multi-vendor-store", productRouter);
 
 app.use(notfoundMiddleware);
 app.use(errorHandlerMiddleware);
