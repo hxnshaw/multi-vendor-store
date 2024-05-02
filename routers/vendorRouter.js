@@ -76,6 +76,6 @@ router
 //admin route to view a Vendor's account
 router
   .route("/vendors/find-vendor/:id")
-  .get(authenticateUser, authorizePermissions("admin"), viewSingleVendor);
+  .get(authenticateUser, viewSingleVendor);
 
 module.exports = router;

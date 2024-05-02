@@ -41,8 +41,14 @@ const vendorSchema = new mongoose.Schema(
       default: "vendor",
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+vendorSchema.virtual("business", {
+  ref: "Business",
+  localField: "_id",
+  foreignField: "owner",
+});
 
 //Hash User Password
 vendorSchema.pre("save", async function () {

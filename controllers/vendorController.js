@@ -75,10 +75,12 @@ exports.getAllVendors = async (req, res) => {
 exports.viewSingleVendor = async (req, res) => {
   const { id: vendorId } = req.params;
 
-  const vendor = await Vendor.findOne({ _id: vendorId });
+  const vendor = await Vendor.findOne({ _id: vendorId }).select(
+    "-password -reset_code -createdAt -updatedAt"
+  );
+  await vendor.populate("business");
   if (!vendor) throw new CustomError.NotFoundError("Vendor does not exist");
-  const tokenUser = createTokenUser(vendor);
-  res.status(StatusCodes.OK).json({ data: tokenUser });
+  res.status(StatusCodes.OK).json({ data: vendor });
 };
 
 exports.viewMyVendorProfile = async (req, res) => {
