@@ -22,5 +22,69 @@ exports.getSingleProduct = async (req, res) => {
     throw new CustomError.NotFoundError(
       `No product found with id: ${productId}`
     );
-  res.status(StatusCodes.OK).json({ data:product });
+  res.status(StatusCodes.OK).json({ data: product });
+};
+
+exports.viewAllProducts = async (req, res) => {
+  const page = parseInt(req.query.page) - 1 || 0;
+  const limit = parseInt(req.query.limit) || 5;
+  const search = req.query.search || "";
+  let sort = req.query.sort || "rating";
+  let category = req.query.category || "All";
+
+  const categoryOptions = [
+    "Automotive",
+    "Beauty",
+    "Books",
+    "Camera",
+    "Consumer Electronics",
+    "Fine Art",
+    "Grocery",
+    "Health & Personal Care",
+    "Home & Garden",
+    "Industrial & Scientific",
+    "Musical Instruments",
+    "Office Products",
+    "Outdoors",
+    "Pet Supplies",
+    "Software",
+    "Sports",
+    "Video Games",
+  ];
+
+  category === "All"
+    ? (category = [...categoryOptions])
+    : (category = req.query.category.split(","));
+  req.query.sort ? (sort = req.query.sort.split(",")) : (sort = [sort]);
+
+  let sortBy = {};
+  if (sort[1]) {
+    sortBy[sort[0]] = sort[1];
+  } else {
+    sortBy[sort[0]] = "asc";
+  }
+
+  const products = await Product.find({
+    name: { $regex: search, $options: "i" },
+  })
+    .where("category")
+    .in([...category])
+    .sort(sortBy)
+    .skip(page * limit)
+    .limit(limit);
+
+  const total = await Product.countDocuments({
+    category: { $in: [...category] },
+    name: { $regex: search, $options: "i" },
+  });
+
+  const response = {
+    error: false,
+    total,
+    page: page + 1,
+    limit,
+    categories: categoryOptions,
+    products,
+  };
+  res.status(StatusCodes.OK).json({ data: response });
 };
