@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema(
       required: [true, "Please Provide A Business Name"],
       trim: true,
       minlength: 3,
-      maxlength: 20,
+      maxlength: 50,
     },
     description: {
       type: String,
@@ -21,10 +21,12 @@ const productSchema = new mongoose.Schema(
       trim: true,
       default: 0,
     },
-    images: {
-      type: String,
-      default: "/uploads/product_image.jpg",
-    },
+    images: [
+      {
+        type: String,
+        default: "/uploads/product_image.jpg",
+      },
+    ],
     category: {
       type: String,
       required: [true, "Please Enter The Product Category"],
@@ -33,6 +35,8 @@ const productSchema = new mongoose.Schema(
         "Beauty",
         "Books",
         "Camera",
+        "Clothing",
+        "Shoes",
         "Consumer Electronics",
         "Fine Art",
         "Grocery",

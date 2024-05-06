@@ -29,7 +29,7 @@ exports.viewAllProducts = async (req, res) => {
   const page = parseInt(req.query.page) - 1 || 0;
   const limit = parseInt(req.query.limit) || 5;
   const search = req.query.search || "";
-  let sort = req.query.sort || "rating";
+  let sort = req.query.sort || "category";
   let category = req.query.category || "All";
 
   const categoryOptions = [
@@ -87,4 +87,58 @@ exports.viewAllProducts = async (req, res) => {
     products,
   };
   res.status(StatusCodes.OK).json({ data: response });
+};
+
+exports.updateAProduct = async (req, res) => {
+  const { name, price, image, description, category } = req.body;
+  const { id: productId } = req.params;
+
+  const product = await Product.findOne({
+    _id: productId,
+    owner: req.user.userId,
+  });
+  if (!product)
+    throw new CustomError.NotFoundError(
+      `No Product found with id:${productId}`
+    );
+  product.name = name;
+  product.price = price;
+  product.image = image;
+  product.description = description;
+  product.category = category;
+
+  await product.save();
+  res.status(StatusCodes.OK).json({ message: "Updated successfully", product });
+};
+
+exports.deleteAProduct = async (req, res) => {
+  const { id: productId } = req.params;
+  const product = await Product.findOne({
+    _id: productId,
+    owner: req.user.userId,
+  });
+
+  if (!product)
+    throw new CustomError.NotFoundError(
+      `No Product found with id:${productId}`
+    );
+  await product.deleteOne();
+  res.status(StatusCodes.OK).json({ message: "Product Deleted" });
+};
+
+exports.uploadImage = async (req, res) => {
+  const result = await cloudinary.uploader.upload(
+    req.files.image.tempFilePath,
+    {
+      use_filename: true,
+      folder: "multi-vendor-store",
+    }
+  );
+  fs.unlinkSync(req.files.image.tempFilePath);
+  return res
+    .status(StatusCodes.OK)
+    .json({
+      message: "Image successfully uploaded successfully",
+      image: { src: result.secure_url },
+    });
 };
