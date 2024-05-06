@@ -26,7 +26,7 @@ router
   .route("/products/register/upload-image")
   .post(authenticateUser, authorizePermissions("vendor"), uploadImage);
 
-//admin route to view all products
+// view all products
 router.route("/products/view-products").get(authenticateUser, viewAllProducts);
 
 //view a single product
