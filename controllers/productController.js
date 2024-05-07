@@ -18,6 +18,7 @@ exports.createProduct = async (req, res) => {
 exports.getSingleProduct = async (req, res) => {
   const { id: productId } = req.params;
   const product = await Product.findOne({ _id: productId });
+  await product.populate("reviews");
   if (!product)
     throw new CustomError.NotFoundError(
       `No product found with id: ${productId}`
@@ -37,6 +38,7 @@ exports.viewAllProducts = async (req, res) => {
     "Beauty",
     "Books",
     "Camera",
+    "Clothing",
     "Consumer Electronics",
     "Fine Art",
     "Grocery",
@@ -47,6 +49,7 @@ exports.viewAllProducts = async (req, res) => {
     "Office Products",
     "Outdoors",
     "Pet Supplies",
+    "Shoes",
     "Software",
     "Sports",
     "Video Games",
@@ -83,7 +86,7 @@ exports.viewAllProducts = async (req, res) => {
     total,
     page: page + 1,
     limit,
-    categories: categoryOptions,
+    // categories: categoryOptions,
     products,
   };
   res.status(StatusCodes.OK).json({ data: response });
@@ -135,10 +138,8 @@ exports.uploadImage = async (req, res) => {
     }
   );
   fs.unlinkSync(req.files.image.tempFilePath);
-  return res
-    .status(StatusCodes.OK)
-    .json({
-      message: "Image successfully uploaded successfully",
-      image: { src: result.secure_url },
-    });
+  return res.status(StatusCodes.OK).json({
+    message: "Image successfully uploaded successfully",
+    image: { src: result.secure_url },
+  });
 };
