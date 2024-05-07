@@ -1,6 +1,5 @@
 const Review = require("../models/review");
 const Product = require("../models/product");
-const checkPermissions = require("../utils/checkPermissions");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 
