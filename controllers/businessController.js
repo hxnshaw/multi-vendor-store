@@ -7,6 +7,7 @@ exports.registerBusiness = async (req, res) => {
   req.body.owner = req.user.userId;
   const { name, phone_number, address, about } = req.body;
 
+  //remove this function to allow users create multi-businesses.
   const alreadyOwnsABusiness = await Business.findOne({
     owner: req.user.userId,
   });

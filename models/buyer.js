@@ -36,6 +36,10 @@ const buyerSchema = new mongoose.Schema(
     reset_code: {
       type: Number,
     },
+    cart: {
+      type: Array,
+      default: [],
+    },
     role: {
       type: String,
       default: "buyer",

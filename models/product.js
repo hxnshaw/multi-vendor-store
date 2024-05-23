@@ -21,6 +21,10 @@ const productSchema = new mongoose.Schema(
       trim: true,
       default: 0,
     },
+    quantity: {
+      type: Number,
+      required: [true, "Please Enter The Product Quantity"],
+    },
     images: [
       {
         type: String,
