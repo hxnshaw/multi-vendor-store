@@ -51,7 +51,7 @@ exports.getCart = async (req, res) => {
   const owner = req.user.userId;
 
   const cart = await Cart.findOne({ owner });
-  if (!cart) return res.status(StatusCodes.OK).json({ data: null });
+  if (!cart) return res.status(StatusCodes.NOT_FOUND).json({ data: null });
   res.status(StatusCodes.OK).json({ cart });
 };
 
