@@ -26,11 +26,6 @@ const orderSchema = new mongoose.Schema(
         },
       },
     ],
-    bill: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
     shippingAddress: {
       address: {
         type: String,
@@ -41,9 +36,14 @@ const orderSchema = new mongoose.Schema(
         required: true,
       },
     },
-    shippingFee: {
+    status: {
+      type: String,
+    },
+    reference: {
+      type: String,
+    },
+    totalAmount: {
       type: Number,
-      default: 100,
     },
   },
   { timestamps: true }
