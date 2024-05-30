@@ -11,6 +11,7 @@ const PAYSTACK_PUBLIC_KEY = process.env.PAYSTACK_PUBLIC_KEY;
 exports.createOrder = async (req, res) => {
   const owner = req.user.userId;
   let cart = await Cart.findOne({ owner });
+  if (!cart) throw new CustomError.NotFoundError("Cart not found");
   const { shippingAddress } = req.body;
   let totalAmount = 0;
   shippingFee = 100;
@@ -44,7 +45,7 @@ exports.createOrder = async (req, res) => {
   });
   await order.save();
 
-  res.status(200).json({
+  res.status(StatusCodes.OK).json({
     status: "success",
     message: "Payment initialized successfully",
     data: response.data.data, // Includes the payment URL
@@ -73,13 +74,13 @@ exports.verifyPayment = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
       status: "success",
       message: "Payment verified successfully",
       data: order,
     });
   } else {
-    res.status(400).json({
+    res.status(StatusCodes.BAD_REQUEST).json({
       status: "error",
       message: "Payment verification failed",
       data: response.data.data,
