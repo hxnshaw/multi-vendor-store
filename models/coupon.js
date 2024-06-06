@@ -7,6 +7,12 @@ const couponSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
+      uppercase: true,
+    },
+    productId: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: "Product",
     },
     discountPercentage: {
       type: Number,
@@ -18,7 +24,6 @@ const couponSchema = new mongoose.Schema(
     },
     isActive: {
       type: Boolean,
-      required: true,
       default: true,
     },
   },

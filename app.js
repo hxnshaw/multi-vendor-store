@@ -34,6 +34,7 @@ const productRouter = require("./routers/productRouter");
 const reviewRouter = require("./routers/reviewRouter");
 const cartRouter = require("./routers/cartRouter");
 const orderRouter = require("./routers/orderRouter");
+const couponRouter = require("./routers/couponRouter");
 
 //Middleware
 const notfoundMiddleware = require("./middleware/not-found");
@@ -65,6 +66,7 @@ app.use("/api/v1/multi-vendor-store", productRouter);
 app.use("/api/v1/multi-vendor-store", reviewRouter);
 app.use("/api/v1/multi-vendor-store", cartRouter);
 app.use("/api/v1/multi-vendor-store", orderRouter);
+app.use("/api/v1/multi-vendor-store", couponRouter);
 
 app.use(notfoundMiddleware);
 app.use(errorHandlerMiddleware);
