@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { createCoupon } = require("../controllers/couponController");
+const {
+  createCoupon,
+  updateCouponCode,
+} = require("../controllers/couponController");
 const {
   authenticateUser,
   authorizePermissions,
@@ -9,5 +12,9 @@ const {
 router
   .route("/coupons/create-coupon-code")
   .post(authenticateUser, authorizePermissions("admin"), createCoupon);
+
+router
+  .route("/coupons/update-coupon/:couponId")
+  .put(authenticateUser, authorizePermissions("admin"), updateCouponCode);
 
 module.exports = router;

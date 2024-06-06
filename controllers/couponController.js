@@ -27,3 +27,28 @@ exports.createCoupon = async (req, res) => {
   });
   res.status(StatusCodes.CREATED).json({ message: "success", data: coupon });
 };
+
+exports.updateCouponCode = async (req, res) => {
+  const { id: couponId } = req.params;
+  const { code, productId, expiryDate, discountPercentage } = req.body;
+
+  //split the expiry date
+  const [day, month, year, hour] = expiryDate.split(/[- ]/);
+  const expiresIn = new Date(year, month - 1, day, hour);
+  if (expiresIn < new Date())
+    throw new CustomError.BadRequestError("Please enter a valid expiry date");
+
+  if (!code || !productId || !discountPercentage || !expiryDate)
+    throw new CustomError.BadRequestError("Please provide all required fields");
+
+  //check if coupon coded exists.
+  const coupon = await Coupon.findOne({ couponId });
+  if (!coupon) throw new CustomError.NotFoundError("Coupon code not found");
+  coupon.code = code;
+  coupon.productId = productId;
+  coupon.expiryDate = expiresIn;
+  coupon.discountPercentage = discountPercentage;
+
+  await coupon.save();
+  res.status(StatusCodes.OK).json(coupon);
+};
