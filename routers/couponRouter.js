@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   createCoupon,
   updateCouponCode,
+  deleteCouponCode,
 } = require("../controllers/couponController");
 const {
   authenticateUser,
@@ -16,5 +17,9 @@ router
 router
   .route("/coupons/update-coupon/:couponId")
   .put(authenticateUser, authorizePermissions("admin"), updateCouponCode);
+
+router
+  .route("/coupons/delete-coupon/:couponId")
+  .delete(authenticateUser, authorizePermissions("admin"), deleteCouponCode);
 
 module.exports = router;
