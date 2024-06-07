@@ -9,11 +9,6 @@ const couponSchema = new mongoose.Schema(
       trim: true,
       uppercase: true,
     },
-    productId: {
-      type: mongoose.Types.ObjectId,
-      required: true,
-      ref: "Product",
-    },
     discountPercentage: {
       type: Number,
       required: true,

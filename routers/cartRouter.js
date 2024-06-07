@@ -4,6 +4,7 @@ const {
   addToCart,
   getCart,
   deleteFromCart,
+  applyCouponCode,
 } = require("../controllers/cartController");
 
 const {
@@ -21,6 +22,10 @@ router.post(
 router
   .route("/carts/view-my-cart")
   .get(authenticateUser, authorizePermissions("buyer"), getCart);
+
+router
+  .route("/carts/view-my-cart/apply-coupon")
+  .post(authenticateUser, authorizePermissions("buyer"), applyCouponCode);
 
 router
   .route("/carts/view-my-cart/delete-item-from-cart")
