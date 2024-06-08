@@ -110,3 +110,5 @@ exports.applyCouponCode = async (req, res) => {
   //userCart = await userCart.save();
   return res.status(StatusCodes.OK).json({ "cart total": cartTotal, userCart });
 };
+
+//log
