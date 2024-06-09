@@ -111,4 +111,4 @@ exports.applyCouponCode = async (req, res) => {
   return res.status(StatusCodes.OK).json({ "cart total": cartTotal, userCart });
 };
 
-//log
+//log resuming tomorrow
