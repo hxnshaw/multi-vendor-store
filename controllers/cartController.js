@@ -101,14 +101,14 @@ exports.applyCouponCode = async (req, res) => {
   const userCart = await Cart.findOne({ owner });
   if (!userCart) throw new CustomError.NotFoundError("Cart not found");
   let cartTotal = userCart.bill;
+  
   /**
    * convert the discount percentage into a decimal, and calculate
    * the new cart total by multiplying the previous total and the discount factor.
    */
+
   cartTotal = cartTotal * (1 - validCoupon.discountPercentage / 100);
   userCart.bill = cartTotal;
-  //userCart = await userCart.save();
+  await userCart.updateOne({ bill: cartTotal });
   return res.status(StatusCodes.OK).json({ "cart total": cartTotal, userCart });
 };
-
-//log resuming tomorrow
