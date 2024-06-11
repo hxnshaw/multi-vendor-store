@@ -44,6 +44,7 @@ exports.createOrder = async (req, res) => {
     reference: response.data.data.reference,
   });
   await order.save();
+  //send an email to the customer to confirm that the order was saved.
 
   res.status(StatusCodes.OK).json({
     status: "success",
