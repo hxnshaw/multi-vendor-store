@@ -3,6 +3,7 @@ const Cart = require("../models/cart");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const axios = require("axios");
+const nodemailer = require("nodemailer");
 
 // Paystack secret key from environment variables
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
@@ -44,12 +45,30 @@ exports.createOrder = async (req, res) => {
     reference: response.data.data.reference,
   });
   await order.save();
-  //send an email to the customer to confirm that the order was saved.
 
   res.status(StatusCodes.OK).json({
     status: "success",
     message: "Payment initialized successfully",
     data: response.data.data, // Includes the payment URL
+  });
+
+  var transport = nodemailer.createTransport({
+    host: "sandbox.smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: process.env.NODEMAILER_USER,
+      pass: process.env.NODEMAILER_PASSWORD,
+    },
+  });
+
+  //send an email to the customer to confirm that the order was saved.
+
+  await transport.sendMail({
+    to: req.user.email,
+    from: "hello@multi-buyer-store.com",
+    text: "Your order has been saved successfully. Your items will be shipped to you shortly.",
+    html: "<p>Your order has been saved successfully. Your items will be shipped to you shortly.</p>",
+    subject: "Your order has been placed successfully",
   });
 };
 
