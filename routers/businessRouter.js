@@ -6,6 +6,7 @@ const {
   getAllBusinesses,
   updateBusiness,
   deleteBusiness,
+  getAllOrders,
 } = require("../controllers/businessController");
 const {
   authenticateUser,
@@ -27,6 +28,11 @@ router
 
 //view a single business
 router.route("/business/:id").get(authenticateUser, getSingleBusiness);
+
+//view all successful orders
+router
+  .route("/business/:id/completed-orders")
+  .get(authenticateUser, authorizePermissions("vendor"), getAllOrders);
 
 //update business details
 router

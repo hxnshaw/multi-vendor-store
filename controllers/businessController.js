@@ -2,10 +2,11 @@ const Business = require("../models/business");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const nodemailer = require("nodemailer");
+const Order = require("../models/order");
 
 exports.registerBusiness = async (req, res) => {
   req.body.owner = req.user.userId;
-  req.body.email=req.user.email;
+  req.body.email = req.user.email;
   const { name, phone_number, address, about } = req.body;
 
   //⁠Allow vendors create multiple businesses.
@@ -82,4 +83,10 @@ exports.deleteBusiness = async (req, res) => {
   if (!business) throw new CustomError.NotFoundError("Business Not Found");
   await business.deleteOne();
   res.status(StatusCodes.OK).json({ message: "Business deleted successfully" });
+};
+
+exports.getAllOrders = async (req, res) => {
+  // const count = await Order.countDocuments({ status: "completed",vendorId: req.user.userId });
+  // res.json({ success: true, count });
+  res.send("hi")
 };
