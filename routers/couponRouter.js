@@ -12,14 +12,14 @@ const {
 
 router
   .route("/coupons/create-coupon-code")
-  .post(authenticateUser, authorizePermissions("seller"), createCoupon);
+  .post(authenticateUser, authorizePermissions("vendor"), createCoupon);
 
 router
   .route("/coupons/update-coupon/:couponId")
-  .put(authenticateUser, authorizePermissions("seller"), updateCouponCode);
+  .put(authenticateUser, authorizePermissions("vendor"), updateCouponCode);
 
 router
   .route("/coupons/delete-coupon/:couponId")
-  .delete(authenticateUser, authorizePermissions("seller"), deleteCouponCode);
+  .delete(authenticateUser, authorizePermissions("vendor"), deleteCouponCode);
 
 module.exports = router;

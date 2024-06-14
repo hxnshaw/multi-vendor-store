@@ -5,16 +5,11 @@ const nodemailer = require("nodemailer");
 
 exports.registerBusiness = async (req, res) => {
   req.body.owner = req.user.userId;
+  req.body.email=req.user.email;
   const { name, phone_number, address, about } = req.body;
 
-  //remove this function to allow users create multi-businesses.
-  const alreadyOwnsABusiness = await Business.findOne({
-    owner: req.user.userId,
-  });
-  if (alreadyOwnsABusiness)
-    throw new CustomError.BadRequestError(
-      "You can only register one business!"
-    );
+  //⁠Allow vendors create multiple businesses.
+
   if (!name || !phone_number || !address || !about)
     throw new CustomError.BadRequestError(
       "Please provide all required information"

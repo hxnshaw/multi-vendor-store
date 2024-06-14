@@ -28,6 +28,9 @@ const businessSchema = new mongoose.Schema(
       ref: "Vendor",
       required: true,
     },
+    email: {
+      type: String,
+    },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
