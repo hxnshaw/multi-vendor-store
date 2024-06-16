@@ -87,7 +87,7 @@ exports.deleteBusiness = async (req, res) => {
 
 //admin link to view all successful orders
 exports.getAllOrders = async (req, res) => {
-  // const count = await Order.countDocuments({ status: "completed",vendorId: req.user.userId });
-  // res.json({ success: true, count });
+  const count = await Order.countDocuments({ status: "completed"});
+  res.json({ success: true, count });
   res.send("hi")
 };
