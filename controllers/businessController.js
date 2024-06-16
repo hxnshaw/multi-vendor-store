@@ -89,5 +89,5 @@ exports.deleteBusiness = async (req, res) => {
 exports.getAllOrders = async (req, res) => {
   const count = await Order.countDocuments({ status: "completed"});
   res.json({ success: true, count });
-  res.send("hi")
+  
 };
