@@ -4,19 +4,24 @@ const {
   createOrder,
   verifyPayment,
   getOrder,
+  vendorViewOrders,
 } = require("../controllers/orderController");
 
 const {
   authenticateUser,
-  // authorizePermissions,
+  authorizePermissions,
 } = require("../middleware/authentication");
 
 router.route("/orders/checkout").post(authenticateUser, createOrder);
 
 router
   .route("/orders/checkout/verify-payment/:reference")
-  .get(authenticateUser, verifyPayment);
+  .post(authenticateUser, verifyPayment);
 
 router.route("/orders/my-order-history").get(authenticateUser, getOrder);
+
+router
+  .route("/orders/my-dashboard")
+  .get(authenticateUser, authorizePermissions("vendor"), vendorViewOrders);
 
 module.exports = router;

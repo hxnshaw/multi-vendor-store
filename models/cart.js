@@ -17,7 +17,6 @@ const cartSchema = new mongoose.Schema(
         vendorId: {
           type: mongoose.Types.ObjectId,
           ref: "Vendor",
-          required: true,
         },
         name: String,
         quantity: {

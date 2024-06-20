@@ -45,6 +45,7 @@ exports.createOrder = async (req, res) => {
     reference: response.data.data.reference,
   });
   await order.save();
+  cart = [];
 
   res.status(StatusCodes.OK).json({
     status: "success",
@@ -117,4 +118,14 @@ exports.getOrder = async (req, res) => {
       .status(StatusCodes.NOT_FOUND)
       .json({ message: "orders not found" });
   res.status(StatusCodes.OK).json({ orders });
+};
+
+exports.vendorViewOrders = async (req, res) => {
+  // const vendor = req.user.userId;
+  // const orders = await Order.find({ vendor });
+  // if (!orders)
+  //   return res
+  //     .status(StatusCodes.NOT_FOUND)
+  //     .json({ message: "orders not found" });
+  // res.status(StatusCodes.OK).json({ orders });
 };

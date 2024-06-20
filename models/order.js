@@ -36,6 +36,14 @@ const orderSchema = new mongoose.Schema(
         required: true,
       },
     },
+    vendor:{
+      type: mongoose.Types.ObjectId,
+      ref: "Vendor"
+    },
+    business:{
+      type: mongoose.Types.ObjectId,
+      ref: "Business"
+    },
     status: {
       type: String,
     },
