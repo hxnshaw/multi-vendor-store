@@ -120,6 +120,7 @@ exports.getOrder = async (req, res) => {
   res.status(StatusCodes.OK).json({ orders });
 };
 
+//check the number of orders a vendor has made
 exports.vendorViewOrders = async (req, res) => {
   // const vendor = req.user.userId;
   // const orders = await Order.find({ vendor });
