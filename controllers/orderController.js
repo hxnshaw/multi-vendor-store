@@ -9,6 +9,7 @@ const nodemailer = require("nodemailer");
 const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
 const PAYSTACK_PUBLIC_KEY = process.env.PAYSTACK_PUBLIC_KEY;
 
+//paystack
 exports.createOrder = async (req, res) => {
   const owner = req.user.userId;
   let cart = await Cart.findOne({ owner });
