@@ -12,6 +12,7 @@ const {
   authorizePermissions,
 } = require("../middleware/authentication");
 
+//create order
 router.route("/orders/checkout").post(authenticateUser, createOrder);
 
 router
