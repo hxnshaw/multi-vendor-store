@@ -15,6 +15,7 @@ const {
 //create order
 router.route("/orders/checkout").post(authenticateUser, createOrder);
 
+//verify payment
 router
   .route("/orders/checkout/verify-payment/:reference")
   .post(authenticateUser, verifyPayment);
