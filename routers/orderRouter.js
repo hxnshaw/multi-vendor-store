@@ -20,8 +20,10 @@ router
   .route("/orders/checkout/verify-payment/:reference")
   .post(authenticateUser, verifyPayment);
 
+  //view order history
 router.route("/orders/my-order-history").get(authenticateUser, getOrder);
 
+//vendors dashboard
 router
   .route("/orders/my-dashboard")
   .get(authenticateUser, authorizePermissions("vendor"), vendorViewOrders);
