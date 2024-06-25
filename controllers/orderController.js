@@ -67,7 +67,7 @@ exports.createOrder = async (req, res) => {
 
   await transport.sendMail({
     to: req.user.email,
-    from: "hello@multi-buyer-store.com",
+    from: "hello@multi-vendor-store.com",
     text: "Your order has been saved successfully. Your items will be shipped to you shortly.",
     html: "<p>Your order has been saved successfully. Your items will be shipped to you shortly.</p>",
     subject: "Your order has been placed successfully",
