@@ -14,6 +14,11 @@ const orderSchema = new mongoose.Schema(
           ref: "Product",
           required: true,
         },
+        vendorId: {
+          type: mongoose.Types.ObjectId,
+          ref: "Vendor",
+          required: true,
+        },
         quantity: {
           type: Number,
           required: true,
@@ -35,14 +40,6 @@ const orderSchema = new mongoose.Schema(
         type: String,
         required: true,
       },
-    },
-    vendor:{
-      type: mongoose.Types.ObjectId,
-      ref: "Vendor"
-    },
-    business:{
-      type: mongoose.Types.ObjectId,
-      ref: "Business"
     },
     status: {
       type: String,

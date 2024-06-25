@@ -122,12 +122,15 @@ exports.getOrder = async (req, res) => {
 };
 
 //check the number of orders a vendor has made
-exports.vendorViewOrders = async (req, res) => {
-  // const vendor = req.user.userId;
-  // const orders = await Order.find({ vendor });
-  // if (!orders)
-  //   return res
-  //     .status(StatusCodes.NOT_FOUND)
-  //     .json({ message: "orders not found" });
-  // res.status(StatusCodes.OK).json({ orders });
-};
+//not working!
+// exports.vendorViewOrders = async (req, res) => {
+//    const vendorId = req.user.userId;
+//    const orders = await Order.find({ "items.vendorId":vendorId });
+//    //console.log(vendorId);
+//   if (!orders)
+//     return res
+//       .status(StatusCodes.NOT_FOUND)
+//       .json({ message: "orders not found" });
+//   res.status(StatusCodes.OK).json({ orders });
+
+// };
