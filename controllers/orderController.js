@@ -123,14 +123,14 @@ exports.getOrder = async (req, res) => {
 
 //check the number of orders a vendor has made
 //not working!
-// exports.vendorViewOrders = async (req, res) => {
-//    const vendorId = req.user.userId;
-//    const orders = await Order.find({ "items.vendorId":vendorId });
-//    //console.log(vendorId);
-//   if (!orders)
-//     return res
-//       .status(StatusCodes.NOT_FOUND)
-//       .json({ message: "orders not found" });
-//   res.status(StatusCodes.OK).json({ orders });
+exports.vendorViewOrders = async (req, res) => {
+   const vendorId = req.user.userId;
+   const orders = await Order.find({ "items.vendorId":vendorId });
+   //console.log(vendorId);
+  if (!orders)
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: "orders not found" });
+  res.status(StatusCodes.OK).json({ orders });
 
-// };
+};
