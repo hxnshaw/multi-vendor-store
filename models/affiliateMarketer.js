@@ -6,7 +6,7 @@ const affiliateMarketerSchema = new mongoose.Schema({
     required: [true, "Please enter your name"],
     trim: true,
     minlength: 3,
-    maxlength: 50,
+    maxlength: 20,
   },
   email: {
     type: String,
@@ -20,8 +20,8 @@ const affiliateMarketerSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    default: "affiliateUser",
+    default: "AffiliateMarketer",
   },
 });
 
-module.exports = mongoose.model("affiliateMarketer", affiliateMarketerSchema);
+module.exports = mongoose.model("AffiliateMarketer", affiliateMarketerSchema);
