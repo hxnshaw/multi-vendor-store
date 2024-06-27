@@ -151,7 +151,6 @@ exports.updateBuyerDetails = async (req, res) => {
     throw new CustomError.BadRequestError("Incomplete Credentials");
   const buyer = await Buyer.findOne({ email: req.user.email });
   if (!buyer) throw new CustomError.NotFoundError("Not found");
-  console.log(buyer);
   buyer.first_name = first_name;
   buyer.last_name = last_name;
   await buyer.save();
