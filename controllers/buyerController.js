@@ -156,7 +156,7 @@ exports.updateBuyerDetails = async (req, res) => {
   await buyer.save();
   const tokenUser = createTokenUser(buyer);
   attachCookiesToResponse({ res, user: tokenUser });
-  res.status(StatusCodes.OK).json({ message: "Profile updated" });
+  res.status(StatusCodes.OK).json({ message: "Update Saved" });
 };
 
 exports.deleteBuyerProfile = async (req, res) => {
