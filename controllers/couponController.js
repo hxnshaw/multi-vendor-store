@@ -2,6 +2,7 @@ const Coupon = require("../models/coupon");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 
+//create coupon code
 exports.createCoupon = async (req, res) => {
   const { code, productId, discountPercentage, expiryDate,isActive } = req.body;
   if (!code || !productId || !discountPercentage || !expiryDate)
