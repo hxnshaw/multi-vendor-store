@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+//starts in July
 const affiliateSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Types.ObjectId,
